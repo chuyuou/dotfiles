@@ -4,14 +4,14 @@ set -e
 
 echo "Setting up dev environment..."
 
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
 # Do the following on MacOS only
 if [[ $(uname) == "Darwin" ]]; then
+  # Ask for the administrator password upfront
+  sudo -v
+
+  # Keep-alive: update existing `sudo` time stamp until `install` has finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
   echo "MacOS Detected"
   # Install brew
   if ! command -v brew >/dev/null 2>&1; then
@@ -95,10 +95,10 @@ touch $HOME/.z
 
 # Change the users default shell
 echo "Changing the default shell..."
-sudo chsh -s /usr/local/bin/zsh $USER
+sudo chsh -s $(which zsh) $USER
 
 # Install asdf version manager plugins
-for p in nodejs ruby yarn; do
+for p in nodejs ruby; do
   if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
     echo "Installing asdf plugin $p..."
     asdf plugin add $p
@@ -111,7 +111,4 @@ for p in nodejs ruby yarn; do
   fi
 done
 
-# Install default versions
-asdf install
-
-echo "Setup complete, quit terminal and open iTerm to continue..."
+echo "Setup complete, restart terminal to continue..."
