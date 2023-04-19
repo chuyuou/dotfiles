@@ -23,6 +23,7 @@ if [[ $(uname) == "Darwin" ]]; then
   fi
   # Install apps & packages with Brewfile
   echo "Installing packages and apps with Homebrew & Cask..."
+  # YO 2023-04-19: ignore installed stuff to only fix env.
   brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
 fi
 
@@ -99,6 +100,7 @@ sudo chsh -s /usr/local/bin/zsh $USER
 
 # Install asdf version manager plugins
 for p in nodejs ruby yarn; do
+# for p in  ruby; do
   if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
     echo "Installing asdf plugin $p..."
     asdf plugin add $p
