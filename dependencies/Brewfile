@@ -112,3 +112,9 @@ cask "rectangle"
 cask "slack"
 cask "tableplus"
 cask "visual-studio-code"
+
+## YO 2024-01-05 for openjdk 8 on mac chip
+brew tap homebrew/cask-versions
+brew install --cask zulu8
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8 TODO: move in asdf
+
